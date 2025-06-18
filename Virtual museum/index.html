@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Museum</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f9f9f9;
+    }
+    .artifact {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Virtual Museum</h1>
+  <div id="artifact-container"></div>
+
+  <script>
+    fetch("https://api.sheetbest.com/sheets/423a0769-7e45-4a07-aaa1-52a8667f7f94")
+      .then((response) => response.json())
+      .then((data) => {
+        const container = document.getElementById("artifact-container");
+
+        data.forEach((item) => {
+          const artifactDiv = document.createElement("div");
+          artifactDiv.className = "artifact";
+
+          artifactDiv.innerHTML = `
+            <h2>${item.name}</h2>
+            <p><strong>Description:</strong> ${item.description}</p>
+            <p><strong>Findspot:</strong> ${item.findspot}</p>
+            <img src="${item.image}" alt="${item.name}" width="200">
+          `;
+
+          container.appendChild(artifactDiv);
+        });
+      })
+      .catch((error) => console.error("Error loading data:", error));
+  </script>
+</body>
+</html>
